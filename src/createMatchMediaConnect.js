@@ -36,7 +36,11 @@ export default function createMatchMediaConnect(queryMap = {}, options = {}) {
         const nextState = createState();
         if (shallowEqual(internalState, nextState)) return;
         internalState = nextState;
-        forEach(listeners, listener => listener(nextState));
+
+        forEach(listeners, (listener) => {
+            if (!listener) return;
+            listener(nextState);
+        });
     });
 
     if (matchMediaFn) {
